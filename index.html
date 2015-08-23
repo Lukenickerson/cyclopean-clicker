@@ -1,0 +1,245 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Cyclopean Clicker</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href='http://fonts.googleapis.com/css?family=Sigmar+One|Shadows+Into+Light|Rokkitt' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="styles/rocketboots.css" />
+	<link rel="stylesheet" href="styles/eyeball.css" />
+
+	<!-- <link href='styles/font-contrail-one.css' rel='stylesheet' type='text/css'> -->
+	<!-- <link rel="icon" href="images/favicon.ico" type="image/x-icon" /> -->
+</head>
+<body>
+
+	<header class="stateHeader goto" data-state="mainmenu">
+		<h1>Cyclopean Clicker
+			<span class="subTitle">
+				You are the Monster
+			</span>
+		</h1>
+	</header>
+	<div class="state boot">
+		Booting Up
+	</div>	
+	<div class="state preload">
+		<h2>Loading...</h2>
+		<p>If the game fails to load, try refreshing the page.</p>
+	</div>
+	<section class="state mainmenu">
+		<h2>Main Menu</h2>
+		<nav>
+		<ul>
+			<li><button type="button" class="goto non-disk play" data-state="game">
+				Play</button></li>
+			<li><button type="button" class="goto disk has-game continue" data-state="game">
+				Continue</button></li>
+			<li><button type="button" class="goto disk has-game save" data-state="save">
+				Save</button></li>
+			<li><button type="button" class="goto disk new" data-state="new">
+				New</button></li>
+			<li><button type="button" class="goto disk load" data-state="load">
+				Load</button></li>
+			<!--
+			<li><button type="button" class="goto settings" data-state="settings">
+				Settings</button></li>
+			-->
+			<li>
+				<button type="button" class="toggleSound">Toggle Sound 
+					(<span class="onOff">??</span>)</button>
+			</li>
+			<li>
+				<button type="button" class="toggleMusic">Toggle Music 
+					(<span class="onOff">??</span>)</button>
+			</li>
+			<li><button type="button" class="goto help" data-state="help">
+				Help</button></li>
+			<li><button type="button" class="goto credits" data-state="credits">
+				Credits</button></li>
+			<li>
+				<!-- <button type="button" class="goto share" data-state="share">
+				Share</button>
+				-->
+				<a target="_blank" class="share button" 
+					href="http://twitter.com/home?status=Playing%20Net%20Clicker!%20@deathraygames%20#netclicker">
+					Share on Twitter
+				</a>
+			</li>
+		</ul>
+
+		</nav>
+		
+	</section>
+	<section class="state help">
+		<h2>Help</h2>
+		<nav>
+			<button type="button" class="goto" data-state="mainmenu">Back</button>
+		</nav>
+		<p>
+			There are 4 important ratings for your network: Nodes = 
+			the number of computer systems you control. These will go
+			up as you defeat opponents. Security = This is important for
+			staying alive. If a network does not have 100% security, then
+			they are more susceptible to espionage attacks. Info = Information
+			is a type of currency that can be turned into money with development.
+			Money = Cash can be used to purchase more hackers or upgrades.
+		</p>
+		<p>
+			There are 4 hacker jobs: SysAdmins = Keep your security up.
+			Trolls = Attack your opponents security.
+			Black Hats = Steal information from your opponent.
+			Developers = Are responsible for turn the information into
+			products that can be sold. 
+		</p>
+		<p>
+			For help, please see the 
+			<a href="http://ludumdare.com/compo/ludum-dare-32/?action=preview&uid=17861">Ludum Dare entry page</a>
+			or 
+			<a href="http://deathraygames.tumblr.com/search/ldjam">Tumblr #LDJAM</a>.
+		</p>
+	</section>
+	<!--
+	<section class="state settings">
+		<h2>Settings</h2>
+		<nav>
+			<button type="button" class="goto" data-state="mainmenu">Back</button>
+			<button type="button" class="toggleSound">Toggle Sound</button>
+		</nav>
+	</section>
+	-->
+	<section class="state credits">
+		<h2>Credits</h2>
+		<nav>
+			<button type="button" class="goto" data-state="mainmenu">Back</button>
+		</nav>
+		<p>
+			Game Design, Programming, Graphics by Luke Nickerson
+		</p>
+		<p>
+			'Contrail One' font courtesy of Google Fonts.
+		</p>
+		<p>
+			Software: Notepad++, Chrome, Pickle, Bfxr, Bosca Ceoil
+		</p>
+		<p>
+			Recommended Listening: <a target="_blank" href="http://somafm.com/doomed/">Soma fm Doomed</a>
+		</p>
+		<p>
+			Thanks to testers: Christina, Jeff, Matt
+		</p>
+		<p>
+			<a target="_blank" href="https://twitter.com/deathraygames">Follow on Twitter</a>
+			 | 
+			<a target="_blank" href="http://deathraygames.tumblr.com/">Follow on Tumblr</a>
+		</p>
+
+	</section>
+	<!--
+	<section class="state share">
+		<h2>Share</h2>
+		<nav>
+			<button type="button" class="goto" data-state="mainmenu">Back</button>
+			<button type="button" class="">Tweet on Twitter</button>
+			<button type="button" class="">Email to a friend</button>
+		</nav>
+		<p>
+			Thank you for sharing this game!
+		</p>
+	</section>
+	-->
+
+	<div class="state levelUp">
+		<h2>You Defeated a Network</h2>
+		<p>
+			You absorb the nodes of the vanquished network, and
+			search out a new, more powerful opponent. 
+			<br/>
+			Good luck!
+		</p>
+		<nav>
+			<button type="button" class="goto" data-state="game">Continue</button>
+		</nav>
+	</div>
+
+	
+	<div class="state win">
+		<h2>You Win!</h2>
+		<p>
+			Congratulations, you've defeated all the other networks!
+		</p>
+		<p>
+			Brag about your win on Twitter!
+		</p>
+		<p>
+			Refresh the page to start over.
+		</p>
+		<nav>
+			<button type="button" class="refreshPage">Start Over</button>
+			<button type="button" class="goto" data-state="mainmenu">Main Menu</button>
+		</nav>
+	</div>
+
+	
+	<div class="state game">
+		<h2>Game</h2>
+		<div class="layer background"></div>
+		<div class="layer monster">
+			<div class="arms"></div>
+			<div class="body">
+				<div class="eye">
+					<div class="iris">
+						<div class="pupil"></div>
+						<div class="gleam"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="layer ground"></div>
+		<div class="layer enemies">
+
+		</div>
+		<div class="layer effects"></div>
+		<div class="layer ui"></div>
+	</div>
+
+	
+	<footer class="stateFooter">
+		<!-- <a href="ld33/">Originally developed</a> -->
+		Developed in 24 hours for the
+		<a href="http://ludumdare.com/compo/category/ld-33/">
+			Ludum Dare 33 game jam
+		</a>
+		<br />Theme: "You are the Monster"
+
+		<br>
+		by Luke Nickerson 
+		<a href="https://twitter.com/deathraygames">@deathraygames</a>
+		<br>
+		using the
+		<a href="https://github.com/Lukenickerson/rocketboots" 
+			target="_blank"
+			title="RocketBoots - Starter Kit for Web Games - visit the GitHub repo">
+			RocketBoots web game starter kit
+		</a>
+		<br>
+		&copy; 2015
+	</footer>
+
+
+<script src="scripts/rocketboots/core.js"></script>
+<script src="scripts/game.js"></script>
+
+<!--
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-7118348-1', 'deathraygames.com');
+  ga('send', 'pageview');
+</script>
+-->
+
+</body>
+</html>

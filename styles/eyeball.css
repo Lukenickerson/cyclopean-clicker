@@ -1,0 +1,59 @@
+
+.game .layer {
+	position: absolute;
+	top: 0; left: 0;
+	width: 100%; height: 100%;
+}
+
+.layer.background {
+	background-color: #111;
+}
+
+.layer.ground {
+	top: 40em;
+	height: 50%;
+	background: black;
+}
+
+.monster div {
+	position: absolute;
+}
+.monster .body {
+	width: 16em;
+	height: 20em;
+	top: 20em;
+	left: 40%;
+	border-radius: 8em 8em 0 0;
+	background-color: #000;
+	box-shadow: 0 0 15em white;
+}
+.monster .eye {
+	position: relative;
+	top: 10%; left: 4em;
+	width: 6em; height: 4em;
+	border-radius: 100%;
+	border: solid 1em #000;
+	background-color: white;
+	overflow: hidden;
+}
+.monster .iris {
+	position: relative;
+	top: 0.75em; left: 1.25em;
+	width: 3em; height: 3em;
+	border: solid 0.25em black;
+	border-radius: 100%;
+	background-color: #400;
+}
+.monster .pupil {
+	margin: .5em 0 0 .5em;
+	width: 2em; height: 2em;
+	border-radius: 100%;
+	background-color: black;	
+}
+.monster .gleam {
+	position: relative;
+	top: 0.2em; left: 0.2em;
+	width: 0.8em; height: 1em;
+	border-radius: 100%;
+	background-color: rgba(255,255,255,0.9);	
+}
