@@ -4,12 +4,12 @@
 	<meta charset="utf-8">
 	<title>Cyclopean Clicker</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href='http://fonts.googleapis.com/css?family=Sigmar+One|Shadows+Into+Light|Rokkitt' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Luckiest+Guy|Capriola|Inknut+Antiqua:400,900|Titan+One' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="styles/rocketboots.css" />
 	<link rel="stylesheet" href="styles/eyeball.css" />
 
 	<!-- <link href='styles/font-contrail-one.css' rel='stylesheet' type='text/css'> -->
-	<!-- <link rel="icon" href="images/favicon.ico" type="image/x-icon" /> -->
+	<link rel="icon" href="images/favicon.ico" type="image/x-icon" />
 </head>
 <body>
 
@@ -44,7 +44,6 @@
 			<!--
 			<li><button type="button" class="goto settings" data-state="settings">
 				Settings</button></li>
-			-->
 			<li>
 				<button type="button" class="toggleSound">Toggle Sound 
 					(<span class="onOff">??</span>)</button>
@@ -53,6 +52,7 @@
 				<button type="button" class="toggleMusic">Toggle Music 
 					(<span class="onOff">??</span>)</button>
 			</li>
+			-->
 			<li><button type="button" class="goto help" data-state="help">
 				Help</button></li>
 			<li><button type="button" class="goto credits" data-state="credits">
@@ -62,35 +62,27 @@
 				Share</button>
 				-->
 				<a target="_blank" class="share button" 
-					href="http://twitter.com/home?status=Playing%20Net%20Clicker!%20@deathraygames%20#netclicker">
+					href="http://twitter.com/home?status=Playing%20Cyclopean%20Clicker!%20@deathraygames%20#cyclopeanclicker">
 					Share on Twitter
 				</a>
 			</li>
 		</ul>
 
-		</nav>
-		
+		</nav>	
 	</section>
+
 	<section class="state help">
 		<h2>Help</h2>
 		<nav>
 			<button type="button" class="goto" data-state="mainmenu">Back</button>
 		</nav>
 		<p>
-			There are 4 important ratings for your network: Nodes = 
-			the number of computer systems you control. These will go
-			up as you defeat opponents. Security = This is important for
-			staying alive. If a network does not have 100% security, then
-			they are more susceptible to espionage attacks. Info = Information
-			is a type of currency that can be turned into money with development.
-			Money = Cash can be used to purchase more hackers or upgrades.
+			Click the Earth button to travel to Earth. 
+			When on earth click anywhere to fire your laser eye.
 		</p>
 		<p>
-			There are 4 hacker jobs: SysAdmins = Keep your security up.
-			Trolls = Attack your opponents security.
-			Black Hats = Steal information from your opponent.
-			Developers = Are responsible for turn the information into
-			products that can be sold. 
+			Click the Portal button to travel to Dimension 1I where you 
+			will find some introduction text.
 		</p>
 		<p>
 			For help, please see the 
@@ -99,15 +91,7 @@
 			<a href="http://deathraygames.tumblr.com/search/ldjam">Tumblr #LDJAM</a>.
 		</p>
 	</section>
-	<!--
-	<section class="state settings">
-		<h2>Settings</h2>
-		<nav>
-			<button type="button" class="goto" data-state="mainmenu">Back</button>
-			<button type="button" class="toggleSound">Toggle Sound</button>
-		</nav>
-	</section>
-	-->
+
 	<section class="state credits">
 		<h2>Credits</h2>
 		<nav>
@@ -117,16 +101,13 @@
 			Game Design, Programming, Graphics by Luke Nickerson
 		</p>
 		<p>
-			'Contrail One' font courtesy of Google Fonts.
+			Fonts courtesy of Google Fonts.
 		</p>
 		<p>
-			Software: Notepad++, Chrome, Pickle, Bfxr, Bosca Ceoil
+			Software: Sublime Text 3, Chrome
 		</p>
 		<p>
 			Recommended Listening: <a target="_blank" href="http://somafm.com/doomed/">Soma fm Doomed</a>
-		</p>
-		<p>
-			Thanks to testers: Christina, Jeff, Matt
 		</p>
 		<p>
 			<a target="_blank" href="https://twitter.com/deathraygames">Follow on Twitter</a>
@@ -135,58 +116,22 @@
 		</p>
 
 	</section>
-	<!--
-	<section class="state share">
-		<h2>Share</h2>
-		<nav>
-			<button type="button" class="goto" data-state="mainmenu">Back</button>
-			<button type="button" class="">Tweet on Twitter</button>
-			<button type="button" class="">Email to a friend</button>
-		</nav>
-		<p>
-			Thank you for sharing this game!
-		</p>
-	</section>
-	-->
-
-	<div class="state levelUp">
-		<h2>You Defeated a Network</h2>
-		<p>
-			You absorb the nodes of the vanquished network, and
-			search out a new, more powerful opponent. 
-			<br/>
-			Good luck!
-		</p>
-		<nav>
-			<button type="button" class="goto" data-state="game">Continue</button>
-		</nav>
-	</div>
 
 	
-	<div class="state win">
-		<h2>You Win!</h2>
-		<p>
-			Congratulations, you've defeated all the other networks!
-		</p>
-		<p>
-			Brag about your win on Twitter!
-		</p>
-		<p>
-			Refresh the page to start over.
-		</p>
-		<nav>
-			<button type="button" class="refreshPage">Start Over</button>
-			<button type="button" class="goto" data-state="mainmenu">Main Menu</button>
-		</nav>
-	</div>
-
-	
-	<div class="state game">
+	<div class="state game dimension">
 		<h2>Game</h2>
 		<div class="layer background"></div>
 		<div class="layer monster">
 			<div class="arms"></div>
 			<div class="body">
+				<div class="blob blob1"></div>
+				<div class="blob blob2"></div>
+				<div class="blob blob3"></div>
+				<div class="blob blob4"></div>
+				<div class="blob blob5"></div>
+				<div class="blob blob6"></div>
+				<div class="blob blob7"></div>
+				<div class="blob blob8"></div>
 				<div class="eye">
 					<div class="iris">
 						<div class="pupil"></div>
@@ -195,18 +140,108 @@
 				</div>
 			</div>
 		</div>
-		<div class="layer ground"></div>
-		<div class="layer enemies">
-
+		<div class="layer ground earth-only"></div>
+		<div class="layer midground">
+		</div>
+		<div class="layer opponents earth-only">
+			<div class="opponent"></div>
 		</div>
 		<div class="layer effects"></div>
-		<div class="layer ui"></div>
+		<div class="layer ui">
+			<div class="third">
+				<button type="button" class="goto" data-state="mainmenu">Menu</button>
+				<button type="button" class="goto earth-only" data-state="dimension">Portal</button>
+				<button type="button" class="goto dimension-only" data-state="game">Earth</button>
+			</div>
+			<div class="third">
+				Stage <span class="stageNum value">##</span>
+			</div>
+			<div class="third">
+				Progress <span class="challenge value">##</span>/10
+				<button type="button" class="fightBoss grinding-only">Fight Boss</button>
+				<button type="button" class="fleeBoss boss-only">Leave Boss</button>
+			</div>
+			<div class="third newRow">
+				<button type="button" class="upgrade">Upgrade</button>
+				<span class="lesser">Your</span>
+				DPS <span class="monsterDPS value">##</span>
+			</div>
+			<div class="third">
+				<span class="lesser">You are the</span> Monster
+				<br /> 
+				<span class="monsterHP value">##</span>
+				<span class="lesser">
+					/ <span class="monsterMaxHP value">##</span>
+				</span>
+			</div>			
+			<div class="third">
+				Skulls <span class="skulls value">##</span>
+			</div>
+			<div class="third newRow earth-only">
+				<span class="lesser">Opponent's</span> 
+				DPS
+				<span class="opponentDPS value">##</span>
+			</div>
+			<div class="third earth-only">
+				<span class="opponentName">Opponent</span> 
+				<br />
+				<span class="opponentHP value">##</span>
+				<span class="lesser">
+					/ <span class="opponentMaxHP value">##</span>
+				</span>
+				<div class="boss-only">
+					Time Left: <span class="timeLeft">##</span> seconds
+				</div>
+			</div>
+		</div>
+		<div class="layer story dimension-only">
+			<p>
+			You are a cyclopean monster - a powerful creature that
+			inhabits Dimension 1I. Your people have summoned a portal
+			to the puny planet of Earth, and your king has commanded 
+			that you go there to collect skulls for his skull throne.
+			</p>
+			<p>
+			Click the Earth button to travel through the portal. Once
+			on Earth, click anywhere to fire your laser eye.
+			</p> 
+			Collect	enough skulls and you'll be able to get upgrades to 
+			become even more powerful. You may return through the portal
+			at any time to rest and heal.
+			</p>
+		</div>
+		<div class="layer upgrade">
+			<div class="title">Upgrades</div>
+			<button type="button" class="close">X</button>
+			<ul class="upgradeList">
+				<!--
+				<li class="laserEye" data-upgrade="lasereye">
+					<div class="name">Laser Eye</div>
+					<div class="level">
+						Lv. <span class="value">##</span>
+					</div>
+					<div class="damage">
+						DPC: <span class="value">##</span>
+					</div>
+					<button type="button">
+						<div class="cost">
+							<span class="value">##</span>
+							Skulls
+						</div>
+						<div class="benefit">
+							+<span class="value">##</span> damage/click
+						</div>
+					</button>
+				</li>
+				-->
+			</ul>
+		</div>
 	</div>
 
 	
 	<footer class="stateFooter">
 		<!-- <a href="ld33/">Originally developed</a> -->
-		Developed in 24 hours for the
+		Developed in &lt;24 hours for the
 		<a href="http://ludumdare.com/compo/category/ld-33/">
 			Ludum Dare 33 game jam
 		</a>
