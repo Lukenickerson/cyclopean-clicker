@@ -183,10 +183,25 @@ body > .game {
 	position: absolute;
 	width: 8em; height: 8em;
 	bottom: 0; left: 50%;
-	background-color: #666;
+	background-color: #666; /* rgba(0,0,0,0.2);*/
 	border-radius: 100% 100% 50% 50%;
 	transition: all 1s;
 }
+	/* 
+	.opponent > div {
+		position: relative;
+		background-color: #666;
+		border-radius: 1em;
+	}
+	.opponent .body {
+		width: 90%; height: 90%;
+		background-color: red;
+	}
+	.opponent .arm {
+		width: 90%; height: 1em;
+		left: -1em; top: 1em;
+	}
+	*/
 
 /* Laser Beam */
 
@@ -204,7 +219,7 @@ body > .game {
 	font-size: 120%;
 }
 	.lesser {
-		opacity: 0.5;
+		opacity: 0.25;
 	}
 	.value {
 		font-size: 150%;

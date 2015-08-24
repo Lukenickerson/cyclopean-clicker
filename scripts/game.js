@@ -297,7 +297,7 @@ RocketBoots.ready(function(){
 				o.dps = _getDPSByStage(stage);
 				o.exists = true;
 				//console.log("Making opponent", stage, typeof stage, o.dps, o.hp, o);
-				o.$elt.css({ bottom: "0%", opacity: 1.0 });			
+				o.$elt.css({ bottom: "10%", opacity: 1.0 });			
 			}, 1000);
 		}
 		// graphics/animation
@@ -336,10 +336,9 @@ RocketBoots.ready(function(){
 		$('.layer.upgrade').click(function(e){
 			e.stopPropagation();
 		}).on('click', 'button', function(e){
-			var $button = $(e.target);
-			console.log($button);
-			if ($button.hasClass("buy")) {
-				var upgradeKey = $button.closest('li').data('upgrade');
+			var $li = $(e.target).closest('li')
+			if ($li.length > 0) {
+				var upgradeKey = $li.data('upgrade');
 				var bought = g.shop.buy(upgradeKey);
 				if (bought) {
 					g.drawUpgradeList();
@@ -424,7 +423,7 @@ RocketBoots.ready(function(){
 			var $dimView = this.$view;
 			var $monster = $('.monster');
 			$dimView.show();
-			$monster.hide().fadeIn(2000, function(){
+			$monster.hide().fadeIn(1000, function(){
 				$dimView.addClass('is-dimension').removeClass('is-earth');
 				_setupDimensionClick();
 			});
