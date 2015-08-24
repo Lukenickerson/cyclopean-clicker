@@ -1,0 +1,286 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Cyclopean Clicker</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href='http://fonts.googleapis.com/css?family=Luckiest+Guy|Capriola|Inknut+Antiqua:400,900|Titan+One' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="styles/rocketboots.css" />
+	<link rel="stylesheet" href="styles/eyeball.css" />
+
+	<!-- <link href='styles/font-contrail-one.css' rel='stylesheet' type='text/css'> -->
+	<link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+</head>
+<body>
+
+	<header class="stateHeader goto" data-state="mainmenu">
+		<h1>Cyclopean Clicker
+			<span class="subTitle">
+				You are the Monster
+			</span>
+		</h1>
+	</header>
+	<div class="state boot">
+		Booting Up
+	</div>	
+	<div class="state preload">
+		<h2>Loading...</h2>
+		<p>If the game fails to load, try refreshing the page.</p>
+	</div>
+	<section class="state mainmenu">
+		<h2>Main Menu</h2>
+		<nav>
+		<ul>
+			<li><button type="button" class="goto non-disk play" data-state="game">
+				Play</button></li>
+			<li><button type="button" class="goto disk has-game continue" data-state="game">
+				Continue</button></li>
+			<li><button type="button" class="goto disk has-game save" data-state="save">
+				Save</button></li>
+			<li><button type="button" class="goto disk new" data-state="new">
+				New</button></li>
+			<li><button type="button" class="goto disk load" data-state="load">
+				Load</button></li>
+			<!--
+			<li><button type="button" class="goto settings" data-state="settings">
+				Settings</button></li>
+			<li>
+				<button type="button" class="toggleSound">Toggle Sound 
+					(<span class="onOff">??</span>)</button>
+			</li>
+			<li>
+				<button type="button" class="toggleMusic">Toggle Music 
+					(<span class="onOff">??</span>)</button>
+			</li>
+			-->
+			<li><button type="button" class="goto help" data-state="help">
+				Help</button></li>
+			<li><button type="button" class="goto credits" data-state="credits">
+				Credits</button></li>
+			<li>
+				<!-- <button type="button" class="goto share" data-state="share">
+				Share</button>
+				-->
+				<a target="_blank" class="share button" 
+					href="http://twitter.com/home?status=Playing%20Cyclopean%20Clicker!%20@deathraygames%20#cyclopeanclicker">
+					Share on Twitter
+				</a>
+			</li>
+		</ul>
+
+		</nav>	
+	</section>
+
+	<section class="state help">
+		<h2>Help</h2>
+		<nav>
+			<button type="button" class="goto" data-state="mainmenu">Back</button>
+		</nav>
+		<p>
+			Click the Earth button to travel to Earth. 
+			When on earth click anywhere to fire your laser eye.
+		</p>
+		<p>
+			Click the Portal button to travel to Dimension 1I where you 
+			will find some introduction text.
+		</p>
+		<p>
+			For help, please see the 
+			<a href="http://ludumdare.com/compo/ludum-dare-32/?action=preview&uid=17861">Ludum Dare entry page</a>
+			or 
+			<a href="http://deathraygames.tumblr.com/search/ldjam">Tumblr #LDJAM</a>.
+		</p>
+	</section>
+
+	<section class="state credits">
+		<h2>Credits</h2>
+		<nav>
+			<button type="button" class="goto" data-state="mainmenu">Back</button>
+		</nav>
+		<p>
+			Game Design, Programming, Graphics by Luke Nickerson
+		</p>
+		<p>
+			Fonts courtesy of Google Fonts.
+		</p>
+		<p>
+			Software: Sublime Text 3, Chrome
+		</p>
+		<p>
+			Recommended Listening: <a target="_blank" href="http://somafm.com/doomed/">Soma fm Doomed</a>
+		</p>
+		<p>
+			<a target="_blank" href="https://twitter.com/deathraygames">Follow on Twitter</a>
+			 | 
+			<a target="_blank" href="http://deathraygames.tumblr.com/">Follow on Tumblr</a>
+		</p>
+
+	</section>
+
+	
+	<div class="state game dimension">
+		<h2>Game</h2>
+		<div class="layer background"></div>
+		<div class="layer monster">
+			<div class="arms"></div>
+			<div class="body">
+				<div class="blob blob1"></div>
+				<div class="blob blob2"></div>
+				<div class="blob blob3"></div>
+				<div class="blob blob4"></div>
+				<div class="blob blob5"></div>
+				<div class="blob blob6"></div>
+				<div class="blob blob7"></div>
+				<div class="blob blob8"></div>
+				<div class="eye">
+					<div class="iris">
+						<div class="pupil"></div>
+						<div class="gleam"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="layer ground earth-only"></div>
+		<div class="layer midground">
+		</div>
+		<div class="layer opponents earth-only">
+			<div class="opponent">
+				<div class="body"></div>
+				<div class="arm left"></div>
+				<div class="arm right"></div>
+				<div class="leg left"></div>
+				<div class="leg right"></div>
+			</div>
+		</div>
+		<div class="layer effects"></div>
+		<div class="layer ui">
+			<div class="third">
+				<button type="button" class="goto" data-state="mainmenu">Menu</button>
+				<button type="button" class="goto earth-only" data-state="dimension">Portal</button>
+				<button type="button" class="goto dimension-only" data-state="game">Earth</button>
+			</div>
+			<div class="third">
+				Stage <span class="stageNum value">##</span>
+			</div>
+			<div class="third">
+				Progress <span class="challenge value">##</span>/10
+				<button type="button" class="fightBoss grinding-only">Fight Boss</button>
+				<button type="button" class="fleeBoss boss-only">Leave Boss</button>
+			</div>
+			<div class="third newRow">
+				<button type="button" class="upgrade">Upgrade</button>
+				<span class="lesser">Your</span>
+				DPS <span class="monsterDPS value">##</span>
+			</div>
+			<div class="third">
+				<span class="lesser">You are the</span> Monster
+				<br /> 
+				<span class="monsterHP value">##</span>
+				<span class="lesser">
+					/ <span class="monsterMaxHP value">##</span>
+				</span>
+			</div>			
+			<div class="third">
+				Skulls <span class="skulls value">##</span>
+			</div>
+			<div class="third newRow earth-only">
+				<span class="lesser">Opponent's</span> 
+				DPS
+				<span class="opponentDPS value">##</span>
+			</div>
+			<div class="third earth-only">
+				<span class="opponentName">Opponent</span> 
+				<br />
+				<span class="opponentHP value">##</span>
+				<span class="lesser">
+					/ <span class="opponentMaxHP value">##</span>
+				</span>
+				<div class="boss-only">
+					Time Left: <span class="timeLeft">##</span> seconds
+				</div>
+			</div>
+		</div>
+		<div class="layer story dimension-only">
+			<p>
+			You are a cyclopean monster - a powerful creature that
+			inhabits Dimension 1I. Your people have summoned a portal
+			to the puny planet of Earth, and your king has commanded 
+			that you go there to collect skulls for his skull throne.
+			</p>
+			<p>
+			Click the Earth button to travel through the portal. Once
+			on Earth, click anywhere to fire your laser eye.
+			</p> 
+			Collect	enough skulls and you'll be able to get upgrades to 
+			become even more powerful. You may return through the portal
+			at any time to rest and heal.
+			</p>
+		</div>
+		<div class="layer upgrade">
+			<div class="title">Upgrades</div>
+			<button type="button" class="close">X</button>
+			<ul class="upgradeList">
+				<!--
+				<li class="laserEye" data-upgrade="lasereye">
+					<div class="name">Laser Eye</div>
+					<div class="level">
+						Lv. <span class="value">##</span>
+					</div>
+					<div class="damage">
+						DPC: <span class="value">##</span>
+					</div>
+					<button type="button">
+						<div class="cost">
+							<span class="value">##</span>
+							Skulls
+						</div>
+						<div class="benefit">
+							+<span class="value">##</span> damage/click
+						</div>
+					</button>
+				</li>
+				-->
+			</ul>
+		</div>
+	</div>
+
+	
+	<footer class="stateFooter">
+		<!-- <a href="ld33/">Originally developed</a> -->
+		Developed in &lt;24 hours for the
+		<a href="http://ludumdare.com/compo/category/ld-33/">
+			Ludum Dare 33 game jam
+		</a>
+		<br />Theme: "You are the Monster"
+
+		<br>
+		by Luke Nickerson 
+		<a href="https://twitter.com/deathraygames">@deathraygames</a>
+		<br>
+		using the
+		<a href="https://github.com/Lukenickerson/rocketboots" 
+			target="_blank"
+			title="RocketBoots - Starter Kit for Web Games - visit the GitHub repo">
+			RocketBoots web game starter kit
+		</a>
+		<br>
+		&copy; 2015
+	</footer>
+
+
+<script src="scripts/rocketboots/core.js"></script>
+<script src="scripts/game.js"></script>
+
+<!--
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-7118348-1', 'deathraygames.com');
+  ga('send', 'pageview');
+</script>
+-->
+
+</body>
+</html>

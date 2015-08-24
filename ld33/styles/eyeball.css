@@ -1,0 +1,357 @@
+body {
+	font-family: 'Capriola', sans-serif;
+	background-color: #100e0e;
+	color: #eee;
+}
+/* Generics and RocketBoots overrides */
+button, 
+nav button {
+	padding: 0.3em 0.6em;
+	margin: 0.3em 0.3em;
+	font-family: 'Capriola', sans-serif;
+	font-size: 100%;
+	font-weight: normal;
+	color: white;
+	background-color: rgba(0,0,0,0.9);
+	border: solid 0.2em rgba(255,255,255,0.3);
+	border-radius: 0.5em;
+	letter-spacing: 0.1em;
+	outline: none;
+	cursor: pointer;
+}
+	nav button {
+		padding: 1em;
+	}
+	button:hover, 
+	nav button:hover {
+		border-color: rgba(255,255,255,0.9);
+	}
+	nav button.play {
+		background-color: #600;
+	}
+
+body > *, header, footer {
+	background-color: transparent; 
+	color: inherit;
+}
+header h1 {
+	font-family: 'Inknut Antiqua', serif;
+	color: white;
+	line-height: 100%;
+}
+.subTitle {
+	display: block;
+	font-size: 50%;
+	color: #600;
+}
+a,
+footer a {
+	color: #446699;
+}
+::selection {
+	background: none;
+}
+	::-moz-selection {
+		background: none;
+	}
+	::-webkit-selection {
+		background: none;
+	}
+
+.clickable {
+	cursor: pointer;
+}
+
+.state.credits,
+.state.mainmenu,
+.state.help {
+	text-align: left;
+}
+
+/* ==== Game elements ==== */
+
+body > .game {
+	text-align: center;
+}
+.game .layer {
+	position: absolute;
+	top: 0; left: 0;
+	width: 100%; height: 100%;
+}
+
+.layer.background {
+	/* background-color: #111821; */
+	background: #111821 -webkit-radial-gradient(
+		center, ellipse cover, 
+		rgba(255,255,255,0.2) 0%,
+		rgba(255,255,255,0.1) 30%,
+		transparent 90%,
+		#000 100%
+		);
+}
+	.is-dimension .layer.background {
+		background-color: #181111;
+		transition: all 1s;
+	}
+	.is-dimension .layer.background.dim1 {
+		background-color: #181111;
+	}
+	.is-dimension .layer.background.dim2 {
+		background-color: #181118;
+	}
+	.is-dimension .layer.background.dim3 {
+		background-color: #181811;	
+	}
+
+.layer.ground {
+	top: 45em;
+	height: 50%;
+	background: #000;
+	/*
+	background: linear-gradient(#000 0%, #011 20%, #021 100%);
+	*/
+	background: linear-gradient(#021 0%, #011 20%, #000 100%);
+}
+
+/* Monster */
+	.monster div {
+		position: absolute;
+	}
+	.monster .body {
+		width: 16em;
+		height: 25em;
+		top: 20em;
+		left: 40%;
+		border-radius: 90% 90% 70% 70%;
+		background-color: #000;
+		transition: all 1s ;
+	}
+		.is-dimension .monster .body {
+			box-shadow: 0 0 10em white;
+		}
+	.monster .blob {
+		top: 50%; left: 50%;
+		width: 8em; height: 8em;
+		border-radius: 100%;
+		background-color: inherit;
+		transition: all 2s;
+		/*
+		border-bottom: solid 1em rgba(255,255,255,0.05);
+		box-shadow: inset 0 -1em 1em rgba(255,255,255,0.05);
+		*/
+	}
+	.monster .eye {
+		position: relative;
+		top: 10%; left: 4em;
+		width: 6em; height: 4em;
+		border-radius: 100%;
+		border: solid 1em #000;
+		background-color: white;
+		overflow: hidden;
+		transition: all 0.2s;
+	}
+	.monster .iris {
+		position: relative;
+		top: 0.75em; left: 1.25em;
+		width: 3em; height: 3em;
+		border: solid 0.25em black;
+		border-radius: 100%;
+		background-color: #400;
+		transition: all 0.4s;
+	}
+		.monster .iris.laser {
+			background-color: #660;
+			/* box-shadow: 0 0 1em #660; */
+		}
+	.monster .pupil {
+		margin: .5em 0 0 .5em;
+		width: 2em; height: 2em;
+		border-radius: 100%;
+		background-color: black;	
+	}
+	.monster .gleam {
+		position: relative;
+		top: 0.2em; left: 0.2em;
+		width: 0.8em; height: 1em;
+		border-radius: 100%;
+		background-color: rgba(255,255,255,0.9);	
+	}
+
+/* Opponents */
+
+.opponent {
+	position: absolute;
+	width: 8em; height: 8em;
+	bottom: 0; left: 50%;
+	background-color: #666; /* rgba(0,0,0,0.2);*/
+	border-radius: 100% 100% 50% 50%;
+	transition: all 1s;
+}
+	/* 
+	.opponent > div {
+		position: relative;
+		background-color: #666;
+		border-radius: 1em;
+	}
+	.opponent .body {
+		width: 90%; height: 90%;
+		background-color: red;
+	}
+	.opponent .arm {
+		width: 90%; height: 1em;
+		left: -1em; top: 1em;
+	}
+	*/
+
+/* Laser Beam */
+
+.laserbeam {
+	position: absolute;
+	background-color: #999900;
+	border-radius: 100%;
+	box-shadow: 0 0 1em #990;
+}
+
+/* ==== UI ==== */
+
+.layer.ui {
+	padding: 1em;
+	font-size: 120%;
+}
+	.lesser {
+		opacity: 0.25;
+	}
+	.value {
+		font-size: 150%;
+	}
+	.third {
+		display: block;
+		float: left;
+		padding: 1em 0;
+		width: 33%;
+		text-align: center;
+	}
+	.newRow {
+		clear: both;
+	}
+
+.layer.story {
+	top: 40em;
+	width: 60%;
+	/* max-width: 30em; */
+	height: auto;
+	padding: 5%;
+	margin: 0 15%;
+	background: rgba(0,0,0,0.25);
+	border-radius: 2em;
+	text-align: left;
+}
+
+.dimension-only, 
+.earth-only,
+.boss-only,
+.grinding-only {
+	display: none; 
+}
+.is-dimension .dimension-only,
+.is-earth .earth-only,
+.is-boss .boss-only,
+.is-grinding .grinding-only {
+	display: block; 
+}
+.is-dimension button.dimension-only,
+.is-earth button.earth-only,
+.is-boss button.boss-only,
+.is-grinding button.grinding-only {
+	display: inline-block; 
+}
+
+/* ==== Upgrade Tray ==== */
+
+.layer.upgrade {
+	display: none;
+	background: #333;
+	height: auto;
+	box-shadow: 0 1em 0 rgba(0,0,0,0.5);
+	cursor: default;
+}
+	.upgrade .title {
+		text-align: left;
+		padding: 0.5em 1em;
+		color: #000;
+	}
+	.upgrade .close {
+		position: absolute;
+		right: 0; top: 0;
+
+	}
+	.upgradeList {
+		display: block;
+		margin: 0;
+		padding: 0;
+		height: 18em;
+		list-style: none;
+		overflow: auto;
+	}
+	.upgradeList > li {
+		display: block;
+		padding: 0.5em;
+		margin: 0;
+		border-bottom: solid 0.25em rgba(0,0,0,0.5);
+		overflow: auto;
+	}
+	.upgradeList .name {
+		float: left;
+		font-size: 120%;
+	}
+	.upgradeList .level {
+		display: inline-block;
+		margin: 0 2em;
+	}
+	.upgradeList .damage {
+		display: inline-block;
+		margin: 0 2em;
+	}
+	.upgradeList button {
+		float: right;
+	}
+	.cannot-afford {
+		color: #f66;
+		opacity: 0.9;
+		cursor: not-allowed;
+	}
+
+
+/* ==== Float Text ==== */
+
+.floatText {
+	position: absolute; 
+	display: inline-block;
+	padding: 0;
+	border-radius: 2em;
+	min-width: 1em;
+	max-width: 6em;
+	background-color: rgba(0,0,0,0.1);
+	color: #bcd;
+	font-weight: bold;
+	/*
+	text-shadow: 1px 1px 0 white, -1px -1px 0 white,
+		1px -1px 0 white, -1px 1px 0 white,
+		0 0 0.5em black;
+	*/
+	text-shadow: 1px 1px 2px black, 0 0 0.5em rgba(0,0,0,0.5);
+}
+.floatText.neg {
+	color: #a44;
+	/*
+	text-shadow: 1px 1px 0 red, -1px -1px 0 red,
+		1px -1px 0 red, -1px 1px 0 red,
+		0 0 0.5em black;
+	*/
+}
+.floatText.heal {
+	color: #4a4;
+}
+.floatText.laser {
+	color: #660;
+}
