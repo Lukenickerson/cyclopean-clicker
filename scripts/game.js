@@ -19,19 +19,6 @@ RocketBoots.ready(function(){
 
 	g.state.transition("preload");
 
-	// Load Data
-	/*
-	$.getJSON("data/startData.json",function(data){
-		console.log("Data", data);
-		g.enemyStartData = data.enemyStartData;
-		g.playerStartData = data.playerStartData;
-		console.log("startData is loaded.");
-		$.getJSON("data/upgrades.json",function(data){
-			g.upgrades = data.upgrades;
-			g.start();
-		});
-	});
-	*/
 	g.upgradeData = {
 		"lasereye": {
 			name: "Laser Eye"
@@ -174,7 +161,7 @@ RocketBoots.ready(function(){
 
 	function heal(dmg) {
 		if (!this.exists) { return 0; }
-		var realHeal = Math.min(dmg, (this.maxHp - this.hp));
+		var realHeal = Math.min(dmg, (this.getMaxHP() - this.hp));
 		this.hp += realHeal;
 		return realHeal;
 	}
@@ -191,8 +178,8 @@ RocketBoots.ready(function(){
 		location: "Dimension 1I"
 		,exists: true
 		,upgrades: g.upgradeData
-		,hp: 3000
-		,maxHp: 3000
+		,hp: 2000
+		,maxHp: 2000
 		,dpc: 0
 		,dps: 0
 		,getDPC: function(){
@@ -202,6 +189,7 @@ RocketBoots.ready(function(){
 					dpc += _getPowerByLevel(upgrade.dpc, upgrade.level);
 				}
 			});
+			dpc = dpc + (dpc * (this.prestige/10)); 
 			this.dpc = dpc;
 			return dpc;
 		}
@@ -213,12 +201,16 @@ RocketBoots.ready(function(){
 					dps += _getPowerByLevel(upgrade.dps, upgrade.level);
 				}
 			});
+			dps = dps + (dps * (this.prestige/10));
 			this.dps = dps;
 			//console.log(dps);
 			if (typeof seconds == 'undefined') {
 				seconds = 1;
 			}
 			return (dps * seconds);
+		}
+		,getMaxHP: function(){
+			return (2000 + ((g.progress.getStage() - 1) * 200));
 		}
 		,setDPS: function(val){
 			if (typeof val == 'undefined') {
@@ -246,13 +238,15 @@ RocketBoots.ready(function(){
 			} else {
 				this.charge = 0;
 			}
-			console.log(this.charge);
+			//console.log(this.charge);
 			if (opponent.exists) {
 				g.animateLaser();
 				var dmg = this.getDPC();
 				if (this.charge >= 10) {
 					dmg = dmg * 10;
 					this.charge = 0;
+				} else if (this.charge == 9) {
+					dmg = dmg * 5;
 				}
 				dmg = opponent.damage(dmg);
 				g.floatText("-" + _formatInteger(dmg), opponent.$target, g.mousePos, "laser");
@@ -262,6 +256,7 @@ RocketBoots.ready(function(){
 		,die: function(){
 			g.state.transition("dimension");
 		}
+		,prestige: 0
 		// graphics
 		,$target: $('.monster .eye')
 		,$body: $('.monster .body')
@@ -289,6 +284,9 @@ RocketBoots.ready(function(){
 				seconds = 1;
 			}			
 			return (this.dps * seconds);
+		}
+		,getMaxHP: function(){
+			return this.maxHp;
 		}
 		,die: function(){
 			if (!this.exists) { return false; }
@@ -331,7 +329,7 @@ RocketBoots.ready(function(){
 				o.isBoss 	= isBoss || false;
 				o.dps 		= _getDPSByStage(stage);
 				o.skulls 	= _getSkullsByStage(stage);
-				o.maxHp 	=  _getHitPointsByStage(stage);
+				o.maxHp 	= _getHitPointsByStage(stage);
 				if (o.isBoss) {
 					o.maxHp = o.maxHp * 2;
 					o.dps 	= o.dps * 5;
@@ -539,12 +537,12 @@ RocketBoots.ready(function(){
 		g.elements.challenge.innerHTML 		= g.progress.getChallenge();
 		g.elements.monsterDPS.innerHTML 	= _formatInteger(g.monster.getDPS());
 		g.elements.monsterHP.innerHTML 		= _formatInteger(g.monster.hp);
-		g.elements.monsterMaxHP.innerHTML 	= _formatInteger(g.monster.maxHp);
+		g.elements.monsterMaxHP.innerHTML 	= _formatInteger(g.monster.getMaxHP());
 		g.elements.skulls.innerHTML 		= _formatInteger(g.progress.skulls);
 		g.elements.opponentDPS.innerHTML	= _formatInteger(g.opponent.getDPS());
 		g.elements.opponentName.innerHTML 	= g.opponent.name;
 		g.elements.opponentHP.innerHTML 	= _formatInteger(g.opponent.hp);
-		g.elements.opponentMaxHP.innerHTML 	= _formatInteger(g.opponent.maxHp);
+		g.elements.opponentMaxHP.innerHTML 	= _formatInteger(g.opponent.getMaxHP());
 	};
 
 	g.drawUpgradeList = function(){
