@@ -145,11 +145,13 @@
 		</div>
 		<div class="layer opponents earth-only">
 			<div class="opponent">
-				<div class="body"></div>
-				<div class="arm left"></div>
-				<div class="arm right"></div>
-				<div class="leg left"></div>
-				<div class="leg right"></div>
+				<div>
+					<div class="arm left"></div>
+					<div class="arm right"></div>
+					<div class="leg left"></div>
+					<div class="leg right"></div>
+					<div class="body"></div>
+				</div>
 			</div>
 		</div>
 		<div class="layer effects"></div>
@@ -165,7 +167,7 @@
 			<div class="third">
 				Progress <span class="challenge value">##</span>/10
 				<button type="button" class="fightBoss grinding-only">Fight Boss</button>
-				<button type="button" class="fleeBoss boss-only">Leave Boss</button>
+				<button type="button" class="leaveBoss boss-only">Leave Boss</button>
 			</div>
 			<div class="third newRow">
 				<button type="button" class="upgrade">Upgrade</button>
@@ -190,17 +192,21 @@
 			</div>
 			<div class="third earth-only">
 				<span class="opponentName">Opponent</span> 
+				<span class="boss-only"> [Boss] </span>
 				<br />
 				<span class="opponentHP value">##</span>
 				<span class="lesser">
 					/ <span class="opponentMaxHP value">##</span>
 				</span>
+				<!--
 				<div class="boss-only">
 					Time Left: <span class="timeLeft">##</span> seconds
 				</div>
+				-->
 			</div>
 		</div>
 		<div class="layer story dimension-only">
+			<div class="title">Cyclopean Clicker</div>
 			<p>
 			You are a cyclopean monster - a powerful creature that
 			inhabits Dimension 1I. Your people have summoned a portal

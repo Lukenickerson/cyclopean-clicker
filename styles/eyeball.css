@@ -34,6 +34,9 @@ body > *, header, footer {
 	background-color: transparent; 
 	color: inherit;
 }
+header {
+	background-image: none;
+}
 header h1 {
 	font-family: 'Inknut Antiqua', serif;
 	color: white;
@@ -106,7 +109,7 @@ body > .game {
 
 .layer.ground {
 	top: 45em;
-	height: 50%;
+	height: 35%;
 	background: #000;
 	/*
 	background: linear-gradient(#000 0%, #011 20%, #021 100%);
@@ -184,25 +187,48 @@ body > .game {
 	position: absolute;
 	width: 8em; height: 8em;
 	bottom: 0; left: 50%;
-	background-color: #666; /* rgba(0,0,0,0.2);*/
+	background-color:  rgba(0,0,0,0.2);
 	border-radius: 100% 100% 50% 50%;
 	transition: all 1s;
 }
-	/* 
+
 	.opponent > div {
 		position: relative;
-		background-color: #666;
+		width: 100%;
+		height: 100%;
+	}
+	.opponent > div > div {
+		position: absolute;
+		background-color: #555;
 		border-radius: 1em;
 	}
 	.opponent .body {
-		width: 90%; height: 90%;
-		background-color: red;
+		width: 100%; height: 100%;
+		border-radius: 80% 80% 50% 50%;
+		border-top: solid 0.5em #666;
+		border-bottom: solid 0.5em #444;
 	}
 	.opponent .arm {
-		width: 90%; height: 1em;
-		left: -1em; top: 1em;
+		width: 5em; height: 2em; 
+		top: 3em;
+		background-color: #554433;
 	}
-	*/
+	.opponent .arm.left { left: -3em; transform: rotate(-45deg); }
+	.opponent .arm.right { right: -3em; transform: rotate(45deg); }
+
+	.opponent .arm.left.swipe { left: -3em; top: 1em; transform: rotate(45deg); }
+	.opponent .arm.right.swipe { right: -3em; top: 1em; transform: rotate(-45deg); }
+
+	.opponent .leg {
+		width: 2.5em; height: 4em;
+		border-radius: 100% 100% 50% 50%;
+		bottom: -3em;
+		border-bottom: solid 0.5em #444;
+	}
+	.opponent .leg.left { left: 1em; transform: rotate(10deg); }
+	.opponent .leg.right { right: 1em; transform: rotate(-10deg); }
+
+
 
 /* Laser Beam */
 
@@ -216,7 +242,8 @@ body > .game {
 /* ==== UI ==== */
 
 .layer.ui {
-	padding: 1em;
+	padding: 2.5% 5%;
+	width: 90%; height: 95%;
 	font-size: 120%;
 }
 	.lesser {
@@ -241,11 +268,25 @@ body > .game {
 	width: 60%;
 	/* max-width: 30em; */
 	height: auto;
-	padding: 5%;
+	padding: 2% 5%;
 	margin: 0 15%;
 	background: rgba(0,0,0,0.25);
 	border-radius: 2em;
 	text-align: left;
+}
+	.story .title {
+		font-family: 'Inknut Antiqua', serif;
+		font-size: 300%;
+		margin: 0 0 1em 0;
+		padding: 0;
+		letter-spacing: 0.15em;
+		position: absolute;
+		bottom: -3.5em;
+		color: rgba(255,255,255,0.05);
+	}
+
+.layer.effects {
+	font-size: 120%;
 }
 
 .dimension-only, 
@@ -258,13 +299,13 @@ body > .game {
 .is-earth .earth-only,
 .is-boss .boss-only,
 .is-grinding .grinding-only {
-	display: block; 
-}
-.is-dimension button.dimension-only,
-.is-earth button.earth-only,
-.is-boss button.boss-only,
-.is-grinding button.grinding-only {
 	display: inline-block; 
+}
+.is-dimension div.dimension-only,
+.is-earth div.earth-only,
+.is-boss div.boss-only,
+.is-grinding div.grinding-only {
+	display: block; 
 }
 
 /* ==== Upgrade Tray ==== */
@@ -272,6 +313,7 @@ body > .game {
 .layer.upgrade {
 	display: none;
 	background: #333;
+	width: 65%;
 	height: auto;
 	box-shadow: 0 1em 0 rgba(0,0,0,0.5);
 	cursor: default;
@@ -290,7 +332,7 @@ body > .game {
 		display: block;
 		margin: 0;
 		padding: 0;
-		height: 18em;
+		height: 25em;
 		list-style: none;
 		overflow: auto;
 	}
@@ -332,9 +374,11 @@ body > .game {
 	border-radius: 2em;
 	min-width: 1em;
 	max-width: 6em;
+	width: auto;
 	background-color: rgba(0,0,0,0.1);
 	color: #bcd;
 	font-weight: bold;
+	font-size: inherit;
 	/*
 	text-shadow: 1px 1px 0 white, -1px -1px 0 white,
 		1px -1px 0 white, -1px 1px 0 white,
@@ -355,4 +399,12 @@ body > .game {
 }
 .floatText.laser {
 	color: #660;
+}
+.floatText.rock {
+	background-color: #333;
+	color: #333;
+	width: 1.5em;
+	height: 1.5em;
+	border-top: solid 0.25em #444;
+	text-shadow: none;
 }

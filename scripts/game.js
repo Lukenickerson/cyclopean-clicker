@@ -35,13 +35,13 @@ RocketBoots.ready(function(){
 	g.upgradeData = {
 		"lasereye": {
 			name: "Laser Eye"
-			,dpc: 1
+			,dpc: 1.1
 			,cost: 1.5
 			,level: 1
 		}
 		,"lefttentacle": {
 			name: "Left Tentacle Arm"
-			,dps: 1
+			,dps: 1.1
 			,cost: 2
 			,level: 0
 		}
@@ -84,10 +84,10 @@ RocketBoots.ready(function(){
 			return Math.ceil(this._num / 10);
 		}
 		,getChallenge: function(){
-			return (this._num % 10);
+			return (this._num % 11);
 		}
 		,isAtLastChallenge: function(){
-			return (this.getChallenge == 10) ? true : false;
+			return (this.getChallenge() == 10) ? true : false;
 		}
 		,increment: function(){
 			this._num++;
@@ -141,17 +141,17 @@ RocketBoots.ready(function(){
 	//==== Exponential Functions --- These will need to be tweaked!
 
 	function _getCostByLevel(level, costMultiplier){
-		return Math.ceil(Math.pow(10, (level * costMultiplier)/3) * level);
+		return Math.ceil( Math.pow(10, level/3.6) * (Math.pow(costMultiplier, 2.5)) );
 	};
 	function _getPowerByLevel(upgradeStat, level){
-		return Math.ceil(Math.pow(10, (level * upgradeStat)/4) * level);
+		return Math.ceil( (Math.pow(10, level/4) - 1) * (Math.pow(upgradeStat, 2.5)) );
 		//Math.round(Math.pow(1 + upgradeStat, level) - 1);
 	};
 	function _getHitPointsByStage(stage){
-		return Math.ceil(20 + Math.pow(20, stage/2));
+		return Math.ceil(7 + Math.pow(25, stage/3.6));
 	};
  	function _getSkullsByStage(stage){
- 		return Math.round(Math.pow(stage, 2));
+ 		return Math.floor(Math.pow(9, stage/4.1));
  	};
  	function _getDPSByStage(stage){
  		return stage - 1;
@@ -191,8 +191,8 @@ RocketBoots.ready(function(){
 		location: "Dimension 1I"
 		,exists: true
 		,upgrades: g.upgradeData
-		,hp: 10000
-		,maxHp: 10000
+		,hp: 3000
+		,maxHp: 3000
 		,dpc: 0
 		,dps: 0
 		,getDPC: function(){
@@ -231,9 +231,33 @@ RocketBoots.ready(function(){
 		,damage: damage
 		,heal: heal
 		,clickHeal: function(){
-			var healAmount = Math.min(Math.max(1, (this.getDPS()/10)), 500);
+			var healAmount = Math.min(Math.max(1, (this.getDPS()/4)), (this.maxHp/40));
 			//console.log(healAmount);
-			return this.heal(healAmount);
+			healAmount = this.heal(healAmount);
+			g.floatText("+" + _formatInteger(healAmount), null, this.$target,"heal");
+			return healAmount;
+		}
+		,autoAttack: false
+		,charge: 0
+		,attack: function(opponent){
+
+			if (this.autoAttack) {
+				this.charge++;
+			} else {
+				this.charge = 0;
+			}
+			console.log(this.charge);
+			if (opponent.exists) {
+				g.animateLaser();
+				var dmg = this.getDPC();
+				if (this.charge >= 10) {
+					dmg = dmg * 10;
+					this.charge = 0;
+				}
+				dmg = opponent.damage(dmg);
+				g.floatText("-" + _formatInteger(dmg), opponent.$target, g.mousePos, "laser");
+			}
+			return this;
 		}
 		,die: function(){
 			g.state.transition("dimension");
@@ -268,7 +292,13 @@ RocketBoots.ready(function(){
 		}
 		,die: function(){
 			if (!this.exists) { return false; }
-			this.$elt.css({ bottom: "-50%", opacity: 0 });
+			var lastRotation = this.$elt.data('lastRotation');
+			var rotation = (lastRotation) ? 0 : 360;
+			this.$elt.css({ 
+				bottom: "-10%", 
+				opacity: 0,
+				transform: "rotate(" + rotation + "deg)"
+			}).data('lastRotation', rotation);
 			this.exists = false;
 			g.floatText("+" + this.skulls + " skulls", this.$target, $('.skulls'));
 			g.progress.gainSkulls(this.skulls);
@@ -284,21 +314,40 @@ RocketBoots.ready(function(){
 					this.makeNew();
 				}
 			}
-		},
-		makeNew: function(isBoss){
+		}
+		,retreat: function(){
+			this.$elt.css({ 
+				bottom: "-10%", 
+				opacity: 0,
+			});
+			this.exists = false;
+			return this;			
+		}
+		,makeNew: function(isBoss){
 			var o = this;
 			o.exists = false;
 			setTimeout(function(){
 				var stage = g.progress.getStage();
-				o.isBoss = isBoss || false;
-				o.maxHp =  _getHitPointsByStage(stage);
-				o.hp = o.maxHp;
-				o.skulls = _getSkullsByStage(stage);
-				o.dps = _getDPSByStage(stage);
+				o.isBoss 	= isBoss || false;
+				o.dps 		= _getDPSByStage(stage);
+				o.skulls 	= _getSkullsByStage(stage);
+				o.maxHp 	=  _getHitPointsByStage(stage);
+				if (o.isBoss) {
+					o.maxHp = o.maxHp * 2;
+					o.dps 	= o.dps * 5;
+					o.skulls = o.skulls * 2;
+				}
+				o.hp 		= o.maxHp;	
 				o.exists = true;
 				//console.log("Making opponent", stage, typeof stage, o.dps, o.hp, o);
-				o.$elt.css({ bottom: "10%", opacity: 1.0 });			
+				o.$elt.show().css({ 
+					bottom: "10%", 
+					opacity: 1.0
+				});
+				g.progress.setGameViewClasses();
+				g.draw();
 			}, 1000);
+			return this;
 		}
 		// graphics/animation
 		,$elt: $('.opponent')
@@ -312,23 +361,25 @@ RocketBoots.ready(function(){
 	//======== Events
 
 	function _clearClick() {
-		$('.game').off("click").removeClass("clickable");
+		$('.game').off("click").off("mousedown").off("mouseup").removeClass("clickable");
 	}
 	function _setupEarthClick(){
-		$('.game').off("click").on("click", function(e){
-			if (g.opponent.exists) {
-				g.animateLaser();
-				var dmg = g.opponent.damage(g.monster.getDPC());
-				g.floatText("-" + _formatInteger(dmg), null, null, "laser");
-			}
+		_clearClick();
+		$('.game').on("click", function(e){
+			_setMousePos(e);		
+		}).on("mousedown", function(e){
+			g.monster.autoAttack = true;
+		}).on("mouseup", function(e){
+			g.monster.autoAttack = false;
+			g.monster.attack(g.opponent);
 		}).addClass("clickable");
 	}
 
 	function _setupDimensionClick(){
-		$('.game').off("click").on("click", function(e){
-			var h = g.monster.clickHeal();
-			//console.log(h);
-			g.floatText("+" + _formatInteger(h), null, g.monster.$target,"heal");
+		_clearClick();
+		$('.game').on("click", function(e){
+			_setMousePos(e);
+			g.monster.clickHeal();
 		}).addClass("clickable");	
 	}
 
@@ -345,6 +396,12 @@ RocketBoots.ready(function(){
 				}
 			}
 		});
+		$('button.fightBoss').click(function(e){
+			g.opponent.retreat().makeNew(true);
+		});
+		$('button.leaveBoss').click(function(e){
+			g.opponent.retreat().makeNew();
+		});
 		$('button.upgrade').click(function(e){
 			g.drawUpgradeList();
 			$('.layer.upgrade').slideDown();
@@ -355,9 +412,12 @@ RocketBoots.ready(function(){
 	}
 
 	g.mousePos = { "x" : 0, "y" : 0 };
-	$(document).mousemove(function(e) {
+	function _setMousePos(e){
 		g.mousePos.x = e.pageX;
-		g.mousePos.y = e.pageY;
+		g.mousePos.y = e.pageY;		
+	}
+	$(document).mousemove(function(e) {
+		_setMousePos(e);
 	});
 
 	//======== Loops and Timing
@@ -383,6 +443,7 @@ RocketBoots.ready(function(){
 			var seconds = g.timing.getElapsedSeconds(true);
 			g.opponent.damage( g.monster.getDPS(seconds) );
 			g.monster.damage( g.opponent.getDPS(seconds) );
+			g.animateLook();
 			g.draw();
 		}, 500);
 		g.earthLoop.addModulusAction(0.25, function(){
@@ -390,19 +451,24 @@ RocketBoots.ready(function(){
 		});
 		g.earthLoop.addModulusAction(1, function(){
 			g.animateLife();
+			g.animateOpponent();
 			var oppDPS = g.opponent.getDPS();
 			if (oppDPS > 0.5) {
-				g.floatText("-" + oppDPS, g.monster.$target);
+				g.floatText("-" + oppDPS, g.monster.$target, g.$elts.monsterHP, "neg");
 			}
 			var monDPS = g.monster.getDPS();
 			if (monDPS > 0.5) {
-				g.floatText("-" + monDPS, g.opponent.$target);
+				g.floatText("-" + monDPS, g.opponent.$target, g.$elts.opponentHP);
+			}
+			if (g.monster.autoAttack) {
+				g.monster.attack(g.opponent);
 			}
 			g.drawUpgradeList();
 		});
 		g.dimensionLoop = new rb.Looper(function(){
 			var seconds = g.timing.getElapsedSeconds(true);
 			g.monster.heal( 1 * seconds );
+			g.animateLook();
 			g.draw();
 		}, 500);
 		g.dimensionLoop.addModulusAction(0.1, function(){
@@ -488,19 +554,30 @@ RocketBoots.ready(function(){
 			var benefitHTML = '';
 			var nextLevel = upgrade.level + 1;
 			var html = '';
+			var dmg = 0;
 			if (typeof upgrade.dpc == 'number') {
-				damageHTML += 'DPC: <span class="value">' + _formatInteger(upgrade.dpc) + '</span>';
+				dmg = _getPowerByLevel(upgrade.dpc, upgrade.level);
+				damageHTML += (
+					'DPC: <span class="value">' 
+					+ _formatInteger(dmg)
+					+ '</span>'
+				);
 				benefitHTML += (
 					'+<span class="value">' 
-					+ _formatInteger(_getPowerByLevel(upgrade.dpc, nextLevel))
+					+ _formatInteger(_getPowerByLevel(upgrade.dpc, nextLevel) - dmg)
 					+ '</span> damage/click'
 				);
 			}
 			if (typeof upgrade.dps == 'number') {
-				damageHTML += 'DPS: <span class="value">' + _formatInteger(upgrade.dps) + '</span>';
+				dmg = _getPowerByLevel(upgrade.dps, upgrade.level);
+				damageHTML += (
+					'DPS: <span class="value">' 
+					+ _formatInteger(dmg) 
+					+ '</span>'
+				);
 				benefitHTML += (
 					'+<span class="value">' 
-					+ _formatInteger(_getPowerByLevel(upgrade.dps, nextLevel))
+					+ _formatInteger(_getPowerByLevel(upgrade.dps, nextLevel) - dmg)
 					+ '</span> damage/second'
 				);				
 			}
@@ -537,6 +614,7 @@ RocketBoots.ready(function(){
 		$('.game').css({ fontSize: g.emSize + "px" });
 	};
 
+	var floatTextContainer = $('.layer.effects');
 	g.floatText = function(t, $start, $target, myClass){
 		var $ft = $('<div class="floatText">' + t + '</div>');
 		var animObj = {
@@ -546,14 +624,20 @@ RocketBoots.ready(function(){
 		var startX = 0; 
 		var startY = 0;
 		var offset;
+		var $container = floatTextContainer || $('body');
 
 		if (myClass) {
 			$ft.addClass(myClass);
 		}
 		if ($target) {
-			offset = $target.offset();
-			animObj.left = offset.left;
-			animObj.top = offset.top;
+			if (typeof $target.offset == 'function') {
+				offset = $target.offset();
+				animObj.left = offset.left;
+				animObj.top = offset.top;
+			} else if (typeof $target.x == 'number') {
+				animObj.left = $target.x;
+				animObj.top = $target.y;
+			}
 		}
 		if ($start) {
 			offset = $start.offset();
@@ -567,19 +651,20 @@ RocketBoots.ready(function(){
 			"top" : startY,
 			"left" : startX
 		});
-		$('body').append($ft);
+		$container.append($ft);
 		$ft.animate({ "top": startY - (10 + g.dice.roll1d(40)) }, 500, function(){
 			$ft.animate(animObj, 1000, function(){
 				$ft.remove();
 			});
 		});
 	};
+	
 
 	g.setBlob = function(n){
 		var w = (2 + g.dice.roll1d(10));
 		var h = w + g.dice.roll1d(3) - 1;
 		$('.blob' + n).css({ 
-			top: 	(g.dice.roll1d(g.monster.emHeight) - (h/2)) + "em"
+			top: 	(g.dice.roll1d(g.monster.emHeight) - (h/2) + 1) + "em"
 			,left: 	(g.dice.roll1d(g.monster.emWidth) - (w/2)) + "em"
 			,width:  w + "em"
 			,height: h + "em"
@@ -609,6 +694,24 @@ RocketBoots.ready(function(){
 			});
 		}
 	}
+
+	g.animateLook = function(){
+		if (g.monster.isEyeOpen) {
+			var irisOffset = g.monster.$iris.offset();
+			var buffer = 200;
+			if (g.mousePos.x < (irisOffset.left - buffer)) {
+				g.monster.$iris.css({ "left": "0.5em" });
+			} else {
+				var irisRight = irisOffset.left + g.monster.$iris.width();
+				if (g.mousePos.x > (irisRight + buffer)) {
+					g.monster.$iris.css({ "left": "2.0em" });
+				} else {
+					g.monster.$iris.css({ "left": "1.25em" });
+				}
+			}
+		}
+	};
+
 	g.animateBlink = function(forceOpen){
 		function openEye(){
 			g.monster.isEyeOpen = true;
@@ -632,18 +735,30 @@ RocketBoots.ready(function(){
 	};
 
 	g.animateOpponentMove = function(){
-		if (g.dice.roll1d(3) == 1) {
+		var roll = g.dice.roll1d(3);
+		if (roll == 1) {
 			g.opponent.$elt.css({
 				left: 		(25 + g.dice.roll1d(50)) + "%" 
 				,bottom: 	(g.dice.roll1d(20)) + "%"
-			});
+			}).find('.arm').removeClass('swipe');
+		} else {
+			if (roll == 2) {
+				var $arm = g.opponent.$elt.find('.arm.right').addClass('swipe');
+				
+			} else if (roll == 3) {
+				var $arm = g.opponent.$elt.find('.arm.left').addClass('swipe');
+			}
+			g.floatText("*", $arm, g.monster.$target, "rock");
 		}
+	};
+
+	g.animateOpponent = function(){
+		g.animateOpponentMove();
 	};
 
 	g.animateLife = function(){
 		g.animateBreathing();
 		g.animateBlink();
-		g.animateOpponentMove();
 	};
 
 	g.animateLaser = function(){
@@ -689,7 +804,7 @@ RocketBoots.ready(function(){
 	g.start = function(){
 
 		_setupLoops();
-		var $elts = {
+		g.$elts = {
 			stageNum: 		$('.stageNum.value') 		
 			,challenge: 	$('.challenge.value') 		
 			,monsterDPS: 	$('.monsterDPS.value') 	
@@ -701,14 +816,15 @@ RocketBoots.ready(function(){
 			,opponentHP: 	$('.opponentHP.value') 	
 			,opponentMaxHP: $('.opponentMaxHP.value') 	
 		};
-		for (var z in $elts) {
-			g.elements[z] = $elts[z][0];
+		for (var z in g.$elts) {
+			g.elements[z] = g.$elts[z][0];
 		}
 		g.resize();
 		g.setAllBlobs();
 		_setupButtons();
 
 		g.timing.setNew();
+		//g.state.transition("game");
 		g.state.transition("dimension");
 
 	}
