@@ -81,6 +81,7 @@ body > .game {
 
 .layer.background {
 	/* background-color: #111821; */
+	background: #20272F;
 	background: #111821 -webkit-radial-gradient(
 		center, ellipse cover, 
 		rgba(255,255,255,0.2) 0%,
