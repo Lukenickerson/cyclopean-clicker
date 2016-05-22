@@ -255,8 +255,9 @@ body > .game {
 	.third {
 		display: block;
 		float: left;
-		padding: 1em 0;
+		padding: 1% 0;
 		width: 33%;
+		min-width: 10em;
 		text-align: center;
 	}
 	.newRow {
